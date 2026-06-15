@@ -173,7 +173,7 @@
             width: 10px;
             height: 10px;
             background: var(--gold);
-            transition: transform .12s, width .3s var(--spring), height .3s var(--spring);
+            transition: width .3s var(--spring), height .3s var(--spring);
             mix-blend-mode: multiply;
         }
 
@@ -186,7 +186,7 @@
             height: 38px;
             border: 1.5px solid var(--gold);
             opacity: .45;
-            transition: transform .38s var(--ease), width .35s var(--spring), height .35s var(--spring);
+            transition: width .35s var(--spring), height .35s var(--spring), opacity .3s;
         }
 
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1891,6 +1891,169 @@
                 grid-template-columns: 1fr
             }
         }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PHONE RESPONSIVE (≤480px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        @media(max-width:480px) {
+
+            html {
+                font-size: 14px
+            }
+
+            img,
+            svg {
+                max-width: 100%;
+                height: auto;
+            }
+
+            nav {
+                padding: 0 4%;
+                height: 60px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+                gap: 6px;
+            }
+
+            .logo-pill {
+                display: none;
+            }
+
+            .drawer {
+                top: 60px;
+                gap: 1.6rem;
+            }
+
+            .drawer a {
+                font-size: 1.8rem;
+            }
+
+            .sec {
+                padding: 70px 5%;
+            }
+
+            .sec-title {
+                font-size: clamp(1.6rem, 7vw, 2.2rem);
+            }
+
+            .eyebrow {
+                font-size: .6rem;
+                gap: 6px;
+            }
+
+            .eyebrow::before,
+            .eyebrow::after {
+                width: 16px;
+            }
+
+            .btn {
+                font-size: .78rem;
+                padding: 11px 20px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            #home {
+                padding: 60px 5% 60px;
+                min-height: auto;
+            }
+
+            .hero-grid {
+                gap: 32px;
+            }
+
+            .hero-text h1 {
+                font-size: clamp(2.1rem, 9vw, 2.6rem);
+            }
+
+            .hero-role {
+                font-size: .85rem;
+                justify-content: center;
+            }
+
+            .hero-desc {
+                font-size: .88rem;
+                max-width: 100%;
+            }
+
+            .av-svg {
+                width: clamp(180px, 60vw, 240px);
+            }
+
+            .speech {
+                font-size: .85rem;
+                padding: 8px 14px;
+                right: 0;
+            }
+
+            .hero-stats {
+                padding: 20px 18px;
+            }
+
+            .s-val {
+                font-size: 1rem;
+            }
+
+            .s-lbl {
+                font-size: .68rem;
+            }
+
+            .about-layout {
+                gap: 24px;
+            }
+
+            .about-av-col {
+                width: 160px;
+            }
+
+            .about-card {
+                padding: 28px 22px;
+                margin-left: 0;
+            }
+
+            .about-card p {
+                font-size: .88rem;
+            }
+
+            #skills {
+                padding: 70px 5%;
+            }
+
+            .sk-header {
+                margin-bottom: 40px;
+            }
+
+            .sk-title {
+                font-size: clamp(1.6rem, 7vw, 2.2rem);
+            }
+
+            .works-grid,
+            .tc-grid {
+                gap: 16px;
+            }
+
+            .cta-text h2 {
+                font-size: clamp(1.6rem, 7vw, 2.2rem);
+            }
+
+            .cta-av,
+            .ct-av {
+                width: 150px;
+            }
+
+            footer {
+                padding: 28px 5%;
+                gap: 14px;
+            }
+        }
     </style>
 </head>
 
@@ -2298,18 +2461,22 @@
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
             var curDot = $('cur');
             var curRing = $('cur-r');
-            var mx = 0, my = 0, rx = 0, ry = 0;
+            var mx = 0, my = 0, rx = 0, ry = 0, dx = 0, dy = 0;
 
             document.addEventListener('mousemove', function (ev) {
                 mx = ev.clientX; my = ev.clientY;
-                curDot.style.transform = 'translate(' + (mx - 5) + 'px,' + (my - 5) + 'px)';
             });
 
-            (function animRing() {
+            (function animCursor() {
+                dx += (mx - dx) * 0.35;
+                dy += (my - dy) * 0.35;
+                curDot.style.transform = 'translate(' + (dx - 5) + 'px,' + (dy - 5) + 'px)';
+
                 rx += (mx - rx) * 0.1;
                 ry += (my - ry) * 0.1;
                 curRing.style.transform = 'translate(' + (rx - 19) + 'px,' + (ry - 19) + 'px)';
-                requestAnimationFrame(animRing);
+
+                requestAnimationFrame(animCursor);
             })();
 
             $$('a,button,.wc,.tc,.sk-card').forEach(function (el) {
